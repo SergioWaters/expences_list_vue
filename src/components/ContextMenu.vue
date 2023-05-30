@@ -1,29 +1,18 @@
 <template>
-  <!-- <v-menu offset-y>
-    <template v-slot:activator="{ on, attrs }">
-      <v-icon v-bind="attrs" v-on="on">mdi-dots-vertical</v-icon>
-    </template>
-    <v-list>
-      <v-list-item v-for="(item, index) in items" :key="index">
-        <v-list-item-title @click="handler(item)">{{
-          item.title
-        }}</v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-menu> -->
-
-  <v-toolbar flat class="edit-menu" v-if="isShown" :style="styles">
-    <v-btn @click="deleteItem">Delete</v-btn>
-    <v-dialog v-model="dialog" max-width="500px">
-      <template v-slot:activator="{ on }">
-        <v-btn v-on="on"> Edit </v-btn>
-      </template>
-      <v-card class="justify-self-center">
+  <transition fade>
+    <v-card class="edit-menu" v-if="isShown" :style="styles">
+      <v-btn v-show="!isEdit" color="red" dark small @click="deleteItem"
+        >Delete</v-btn
+      >
+      <v-btn v-show="!isEdit" color="teal" dark small @click="isEdit = !isEdit">
+        Edit
+      </v-btn>
+      <v-card class="justify-self-center" v-show="isEdit">
         <ExpenceAdd :settings="obj" action="edit" :indx="indx" />
       </v-card>
-    </v-dialog>
-    <button class="closer" @click="onContextHide">X</button>
-  </v-toolbar>
+      <button class="closer" @click="onContextHide">&times;</button>
+    </v-card>
+  </transition>
 </template>
 
 <script>
@@ -34,14 +23,10 @@ export default {
   components: {
     ExpenceAdd: () => import("@/components/ExpenceAdd.vue"),
   },
-  props: {
-    arr: Array,
-  },
   data() {
     return {
-      items: [],
-      dialog: false,
       isShown: false,
+      isEdit: false,
       obj: {},
       indx: null,
       xPos: 0,
@@ -50,35 +35,41 @@ export default {
   },
   methods: {
     ...mapMutations(["updEditExpence"]),
-    handler(item) {
-      item.action();
-    },
+
     deleteItem() {
-      this.updEditExpence([this.index]);
+      this.updEditExpence([this.indx]);
       this.onContextHide();
     },
 
-    onContextShow([indx, obj, caller]) {
-      this.isShown = true;
-      this.indx = indx;
-      if (caller) this.setPositon(caller);
+    onContextShow([indx, obj, e]) {
+      this.isEdit = false;
+
+      if (indx === this.indx && this.isShown) {
+        this.isShown = false;
+      } else {
+        this.indx = indx;
+        this.isShown = true;
+      }
+
+      if (e) this.setPositon(e);
       if (obj) this.obj = obj;
-      // this.items = obj.items;
     },
+
     onContextHide() {
       this.isShown = false;
+      this.isEdit = false;
     },
-    setPositon(caller) {
-      const pos = caller.getBoundingClientRect();
-      this.xPos = pos.right;
-      this.yPos = pos.top;
+
+    setPositon(e) {
+      this.xPos = e.target.offsetLeft + 100;
+      this.yPos = e.target.offsetTop + 30;
     },
   },
   computed: {
     styles() {
       return {
-        top: `${this.yPos + 25}px`,
-        left: `${this.xPos}px`,
+        top: this.yPos + "px",
+        right: this.xPos + "px",
       };
     },
   },
@@ -96,29 +87,24 @@ export default {
 <style scoped>
 .edit-menu {
   position: absolute;
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
   background-color: #f8f8f8;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
+  padding: 20px;
 }
-.form {
-  display: flex;
-  flex-direction: column;
-}
+
 .closer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  font-size: 20px;
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
   position: absolute;
   top: 0;
   right: 0;
-}
-.buttons {
-  display: flex;
-  flex-direction: column;
-}
-input,
-select {
-  min-height: 20px;
-  min-width: 50px;
-  margin: 5px;
-  color: #222;
 }
 </style>

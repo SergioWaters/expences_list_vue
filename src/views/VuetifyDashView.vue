@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="dash__wrapper">
     <!-- eslint-disable  -->
     <v-row class="sm-col-4 col-12">
       <v-col>
@@ -19,11 +19,10 @@
         </v-dialog>
 
         <v-data-table
-          height="80vh"
           calculate-widths
           :headers="headers"
           :items="addNumber"
-          :page.sync="page"
+          :page.sync="currentPage"
           :items-per-page="itemsPerPage"
           hide-default-footer
           class="elevation-1 text-h5 text-sm-h3 text-left"
@@ -32,7 +31,7 @@
           <template v-slot:item.actions="{ item }">
             <v-icon
               small
-              @click="$context.show([item.number - 1, item, $event.target])"
+              @click="$context.show([item.number - 1, item, $event])"
             >
               mdi-dots-vertical
             </v-icon>
@@ -41,7 +40,7 @@
 
         <v-card class="text-center p-2 mt-2">
           <v-pagination
-            v-model="page"
+            v-model="currentPage"
             :length="pageCount"
             color="teal"
           ></v-pagination>
@@ -63,8 +62,7 @@
 
 <script>
 import randomColor from "randomcolor";
-import { mapMutations } from "vuex";
-import { mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "HomeView",
@@ -77,7 +75,7 @@ export default {
     return {
       chartOptions: { hoverOffset: 4, width: 100, height: 100 },
       dialog: false,
-      page: 1,
+      currentPage: 1,
       pageCount: 0,
       itemsPerPage: 10,
       headers: [
@@ -116,9 +114,8 @@ export default {
       return colors;
     },
     getPercentsArr() {
-      const total = this.getTotal;
       return this.getAllCategories.map((item) => {
-        return Math.round((item.value / total) * 100);
+        return Math.round((item.value / this.getTotal) * 100);
       });
     },
     chartDataMut() {
@@ -154,5 +151,7 @@ div {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+.dash__wrapper {
+  position: relative;
+}
 </style>
-

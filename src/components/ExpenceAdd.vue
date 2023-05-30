@@ -1,4 +1,4 @@
-<template >
+<template>
   <v-container max-width="500px">
     <v-card class="text-left pa-8 cols-5">
       <h3 v-if="message">{{ message }}</h3>
@@ -30,9 +30,9 @@ import { mapMutations } from "vuex";
 export default {
   name: "ExpenceAdd",
   props: {
-    action: String,
-    settings: Object,
-    indx: Number,
+    action: { type: String },
+    settings: { type: Object },
+    indx: { type: Number },
   },
   data() {
     return {
@@ -100,5 +100,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

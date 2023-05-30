@@ -4,7 +4,7 @@
     <transition fade>
       <ExpenceAdd v-if="name === 'addExpence'" />
     </transition>
-    <button @click="$modal.hide()">X</button>
+    <button @click="$modal.hide()">&times;</button>
   </v-container>
 </template>
 

@@ -11,10 +11,7 @@
       <v-col :cols="4">{{ expence.date }}</v-col>
       <v-col :cols="4">{{ expence.category }}</v-col>
       <v-col :cols="2">{{ expence.value }}</v-col>
-      <v-col
-        :cols="1"
-        @click="$context.show([getIndex(expence), expence, $event.target])"
-      >
+      <v-col :cols="1" @click="onCont(e, expence)">
         <v-icon>mdi-dots-vertical</v-icon>
       </v-col>
     </v-row>
@@ -39,6 +36,11 @@ export default {
     expencesArr: Array,
   },
   methods: {
+    onContext(e, expence) {
+      const props = [this.getIndex(expence), expence, e.currentTarget];
+      console.log(props);
+      // this.$context.show(props);
+    },
     getDate(date) {
       return new Intl.DateTimeFormat("ru-RU").format(new Date(date));
     },
