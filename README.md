@@ -1,4 +1,4 @@
-# expences
+# Single page application to store your expences. stack:  Vue.js v2, Vuex, Vue-router, Chart.js, Vuetify
 
 ## Project setup
 ```
