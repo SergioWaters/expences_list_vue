@@ -3,6 +3,7 @@
     <h3>Popular Categories</h3>
     <v-text-field v-model="amount" type="number" label="Put your expence" />
     <v-btn
+      class="ma-2"
       :to="`/addExpence/${item}?value=${amount}&push=true`"
       v-for="item in getCategoryArr"
       :key="item"
@@ -11,6 +12,7 @@
     </v-btn>
   </v-container>
 </template>
+
 <script>
 import { mapGetters } from "vuex";
 

@@ -1,8 +1,13 @@
 <template>
-  <v-container max-width="500px">
+  <v-container max-width="500px" @keyup.esc="keyPressHandler()" tabindex="0">
     <v-card class="text-left pa-8 cols-5">
       <h3 v-if="message">{{ message }}</h3>
-      <v-text-field v-model="date" type="date" label="Choose Date" />
+      <v-text-field
+        v-model="date"
+        type="date"
+        label="Choose Date"
+        tabindex="1"
+      />
       <v-text-field v-model.number="value" label="Put amount" />
       <v-select
         v-model="category"
@@ -45,6 +50,12 @@ export default {
     };
   },
   methods: {
+    keyPressHandler(e) {
+      console.log("escape pressed ", e);
+      this.$router.push({
+        path: "/",
+      });
+    },
     ...mapMutations(["updNewExpence", "updEditExpence"]),
     addExpence() {
       this.message = "";
@@ -78,6 +89,7 @@ export default {
     },
   },
   mounted() {
+    focus(this.value);
     if (this.settings) {
       const obj = this.settings;
       this.category = obj.customCategory || obj.category;
@@ -93,7 +105,7 @@ export default {
         this.addExpence();
       }
       this.$router.push({
-        name: "home",
+        path: "/",
       });
     }
   },

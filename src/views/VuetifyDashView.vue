@@ -106,11 +106,11 @@ export default {
       "getTotal",
     ]),
     getColorsArr() {
-      const colors = [];
-      let count = this.getCategoryArr.length;
-      for (let i = 0; i < count; i++) {
-        colors.push(randomColor());
-      }
+      const count = this.getCategoryArr.length;
+      const colors = randomColor({
+        count: count,
+        hue: "green",
+      });
       return colors;
     },
     getPercentsArr() {
