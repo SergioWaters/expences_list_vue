@@ -99,51 +99,6 @@ export default {
           category: "Transport",
           value: 360,
         },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
-        {
-          date: "2020-03-24",
-          category: "Food",
-          value: 532,
-        },
       ];
       ctx.commit("updateExpences", arr);
     },

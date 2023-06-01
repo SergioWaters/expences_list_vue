@@ -1,69 +1,110 @@
 <template>
   <v-container>
-    <h1>{{ msg }}</h1>
-    <hr />
-    <div class="display">
-      <input v-model.number="operand1" name="oper1" />
-      <input v-model.number="operand2" name="oper2" />
-
-      = {{ result }}
-    </div>
-
-    <div class="keyboard">
-      <button
-        :name="operation"
-        v-for="operation in operationArr"
-        :key="operation"
-        @click="calculate(operation)"
-      >
-        {{ operation }}
-      </button>
-    </div>
-
-    <label for="numbersCheckbox">
-      <input
-        type="checkbox"
-        name="showNumbers"
-        id="numbersCheckbox"
-        v-model="numberKeysCheckbox"
-      />
-      Отобразить экранную клавиатуру с цифрами
-    </label>
-
-    <div class="numberKeys" v-if="numberKeysCheckbox">
-      <button
-        :name="number"
-        v-for="number in numberArr"
-        :key="number"
-        @click="addNumber(number)"
-      >
-        {{ number }}
-      </button>
-      <button name="backspace" @click="removeNumber()">backspace</button>
-
-      <div class="operandPick">
-        <label for="operand1">
-          Операнд 1
-          <input
-            type="radio"
-            name="operand"
-            id="operand1"
-            v-model="operandPick"
-            value="operand1"
-          />
-        </label>
-        <label for="operand2">
-          Операнд 2
-          <input
-            type="radio"
-            name="operand"
-            id="operand2"
-            v-model="operandPick"
-            value="operand2"
-          />
-        </label>
-      </div>
-    </div>
+    <v-container class="pa-5 d-flex align-center justify-center w-100">
+      <v-card class="pa-5 number-keys" elevation="20">
+        <v-col>
+          <v-row align="center" justify="center" class="d-flex flex-nowrap">
+            <v-text-field
+              hide-details="true"
+              class="ma-1 pa-0 justify-right"
+              solo
+              v-model.number="operand1"
+              name="oper1"
+              v-if="!operationPick"
+            />
+            <v-text-field
+              hide-details="true"
+              class="ma-1 pa-0 justify-right"
+              solo
+              v-model.number="operand2"
+              name="oper2"
+              v-if="!!operationPick"
+            />
+            <v-btn
+              class="ma-1 pa-0 h-100"
+              name="backspace"
+              small
+              @click="removeNumber()"
+              >&#5130;</v-btn
+            >
+          </v-row>
+          <v-row align="center" justify="center">
+            <v-btn
+              :color="operationPick === operation ? 'red' : 'teal'"
+              v-for="operation in operationArr"
+              :key="operation"
+              class="ma-1"
+              density="compact"
+              :name="operation"
+              @click="setOperation(operation)"
+            >
+              {{ operation }}
+            </v-btn>
+          </v-row>
+          <v-row align="center" justify="center">
+            <v-btn
+              class="ma-1"
+              density="compact"
+              :name="number"
+              v-for="number in [7, 8, 9]"
+              :key="number"
+              @click="addNumber(number)"
+            >
+              {{ number }}
+            </v-btn>
+          </v-row>
+          <v-row align="center" justify="center">
+            <v-btn
+              class="ma-1"
+              density="compact"
+              :name="number"
+              v-for="number in [4, 5, 6]"
+              :key="number"
+              @click="addNumber(number)"
+            >
+              {{ number }}
+            </v-btn>
+          </v-row>
+          <v-row align="center" justify="center">
+            <v-btn
+              class="ma-1"
+              density="compact"
+              :name="number"
+              v-for="number in 3"
+              :key="number"
+              @click="addNumber(number)"
+            >
+              {{ number }}
+            </v-btn>
+          </v-row>
+          <v-row align="center" justify="center">
+            <v-btn
+              class="ma-1"
+              density="compact"
+              name="0"
+              @click="addNumber(0)"
+            >
+              0
+            </v-btn>
+            <v-btn
+              class="ma-1"
+              density="compact"
+              name="'.'"
+              @click="addNumber('.')"
+            >
+              .
+            </v-btn>
+            <v-btn
+              :color="!!result ? 'red' : 'teal'"
+              class="ma-1"
+              name="backspace"
+              @click="calculate(operationPick)"
+              >{{ !!result ? "AC" : "=" }}</v-btn
+            >
+          </v-row>
+        </v-col>
+      </v-card>
+    </v-container>
   </v-container>
 </template>
 
@@ -72,32 +113,27 @@ export default {
   name: "CalculatorComp",
   data() {
     return {
-      msg: "Calculator",
-      numberKeysCheckbox: "false",
       operand1: 0,
       operand2: 0,
+      operationPick: null,
       result: 0,
-      numberArr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      operationArr: ["+", "-", "/", "*", "%", "pow"],
+      operationArr: ["+", "-", "/", "*", "%", "p"],
       operandPick: "operand1",
     };
   },
   methods: {
+    setOperation(op) {
+      this.result = 0;
+      this.operationPick = op;
+      this.operandPick = "operand2";
+    },
+
     addNumber(number) {
-      const concat = Number(String(this[this.operandPick]) + String(number));
-      this[this.operandPick] === 0
+      if (this.operandPick === "operand1") this.result = 0;
+      const concat = String(this[this.operandPick]) + String(number);
+      this[this.operandPick] === 0 && number !== "."
         ? (this[this.operandPick] = number)
         : (this[this.operandPick] = concat);
-      // Number(this[this.operandPick]);
-      // if (this.operandPick === "pick1") {
-      //   this.operand1 === 0
-      //     ? (this.operand1 = number)
-      //     : (this.operand1 += String(number));
-      // } else {
-      //   this.operand2 === 0
-      //     ? (this.operand2 = number)
-      //     : (this.operand2 += String(number));
-      // }
     },
 
     removeNumber() {
@@ -106,8 +142,8 @@ export default {
     },
 
     calculate(operation) {
+      this.result = 0;
       const { operand1, operand2 } = this;
-      this.result = "Calculator";
       switch (operation) {
         case "+":
           this.result = +operand1 + +operand2;
@@ -130,6 +166,10 @@ export default {
           this.result = Math.pow(+operand1, +operand2);
           break;
       }
+      this.operand2 = 0;
+      this.operand1 = this.result;
+      this.operandPick = "operand1";
+      this.operationPick = null;
     },
   },
 };
@@ -153,5 +193,14 @@ a {
 }
 .keyboard {
   margin: 20px 0px 50px 0px;
+}
+.number-keys {
+  max-width: 260px;
+  display: flex;
+}
+.calc-display {
+}
+
+.calc-wrapper {
 }
 </style>
