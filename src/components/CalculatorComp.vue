@@ -3,43 +3,36 @@
     <h1>{{ msg }}</h1>
     <hr />
     <v-container class="pa-5 d-flex align-center justify-center w-100">
-      <v-card class="pa-5 number-keys">
+      <v-card class="pa-5 number-keys" elevation="20">
         <v-col>
-          <v-row align="center" justify="center" class="d-flex">
+          <v-row align="center" justify="center" class="d-flex flex-nowrap">
             <v-text-field
               hide-details="true"
-              class="ma-1 pa-0"
+              class="ma-1 pa-0 justify-right"
               solo
               v-model.number="operand1"
               name="oper1"
-              v-if="!operand2"
+              v-if="!operationPick"
             />
             <v-text-field
               hide-details="true"
-              class="ma-1 pa-0"
+              class="ma-1 pa-0 justify-right"
               solo
               v-model.number="operand2"
               name="oper2"
-              v-if="!!operand2"
+              v-if="!!operationPick"
             />
-            <v-btn class="ma-1" name="backspace" @click="removeNumber()"
+            <v-btn
+              class="ma-1 pa-0 w-2"
+              name="backspace"
+              small
+              @click="removeNumber()"
               >&#5130;</v-btn
             >
           </v-row>
-          <v-row
-            class="d-flex"
-            align="center"
-            justify="center"
-            v-if="result"
-            transition="scale-transition"
-          >
-            <span class="result">{{
-              operand1 + " " + operationPick + " " + operand2 + " = " + result
-            }}</span>
-          </v-row>
           <v-row align="center" justify="center">
             <v-btn
-              color="teal"
+              :color="operationPick === operation ? 'red' : 'teal'"
               v-for="operation in operationArr"
               :key="operation"
               class="ma-1"
@@ -104,11 +97,11 @@
               .
             </v-btn>
             <v-btn
-              color="teal"
+              :color="!!result ? 'red' : 'teal'"
               class="ma-1"
               name="backspace"
               @click="calculate(operationPick)"
-              >=</v-btn
+              >{{ !!result ? "AC" : "=" }}</v-btn
             >
           </v-row>
         </v-col>
@@ -133,11 +126,13 @@ export default {
   },
   methods: {
     setOperation(op) {
+      this.result = 0;
       this.operationPick = op;
       this.operandPick = "operand2";
     },
 
     addNumber(number) {
+      if (this.operandPick === "operand1") this.result = 0;
       const concat = String(this[this.operandPick]) + String(number);
       this[this.operandPick] === 0 && number !== "."
         ? (this[this.operandPick] = number)
@@ -152,7 +147,6 @@ export default {
     calculate(operation) {
       this.result = 0;
       const { operand1, operand2 } = this;
-      // this.result = "Calculator";
       switch (operation) {
         case "+":
           this.result = +operand1 + +operand2;
@@ -177,6 +171,8 @@ export default {
       }
       this.operand2 = 0;
       this.operand1 = this.result;
+      this.operandPick = "operand1";
+      this.operationPick = null;
     },
   },
 };
@@ -202,7 +198,7 @@ a {
   margin: 20px 0px 50px 0px;
 }
 .number-keys {
-  max-width: 300px;
+  max-width: 260px;
   display: flex;
 }
 .calc-display {
