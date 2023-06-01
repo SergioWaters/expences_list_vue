@@ -1,7 +1,5 @@
 <template>
   <v-container>
-    <h1>{{ msg }}</h1>
-    <hr />
     <v-container class="pa-5 d-flex align-center justify-center w-100">
       <v-card class="pa-5 number-keys" elevation="20">
         <v-col>
@@ -23,7 +21,7 @@
               v-if="!!operationPick"
             />
             <v-btn
-              class="ma-1 pa-0 w-2"
+              class="ma-1 pa-0 h-100"
               name="backspace"
               small
               @click="removeNumber()"
@@ -115,7 +113,6 @@ export default {
   name: "CalculatorComp",
   data() {
     return {
-      msg: "Calculator",
       operand1: 0,
       operand2: 0,
       operationPick: null,

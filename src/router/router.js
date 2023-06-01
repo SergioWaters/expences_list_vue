@@ -36,8 +36,8 @@ const routes = [
   },
   {
     path: "/addExpence",
-    name: "addExpenceComponent",
-    component: () => import("../components/ExpenceAdd.vue"),
+    name: "addExpencePage",
+    component: () => import("../views/AddExpencePage.vue"),
   },
   {
     path: "/addExpence/:category",

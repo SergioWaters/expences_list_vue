@@ -1,31 +1,30 @@
 <template>
-  <v-container max-width="500px" @keyup.esc="keyPressHandler()" tabindex="0">
-    <v-card class="text-left pa-8 cols-5">
-      <h3 v-if="message">{{ message }}</h3>
-      <v-text-field
-        v-model="date"
-        type="date"
-        label="Choose Date"
-        tabindex="1"
-      />
-      <v-text-field v-model.number="value" label="Put amount" />
-      <v-select
-        v-model="category"
-        label="Choose Category"
-        :items="getCategoryArr"
-      />
-      <v-text-field
-        v-model="customCategory"
-        label="Or create a custom category"
-      />
-      <v-btn v-if="!settings" color="teal" dark @click="addExpence"
-        >Add expence</v-btn
-      >
-      <v-btn v-if="action === 'edit'" color="teal" dark @click="addExpence"
-        >Save changes</v-btn
-      >
-    </v-card>
-  </v-container>
+  <v-card
+    class="text-left pa-8 cols-5 add-form"
+    @keyup.esc="keyPressHandler()"
+    tabindex="0"
+  >
+    <h3 v-if="message">{{ message }}</h3>
+    <v-text-field v-model="date" type="date" label="Choose Date" tabindex="1" />
+    <v-text-field
+      v-model.number="value"
+      label="Put amount"
+      ref="valRef"
+      type="number"
+    />
+    <v-select
+      v-model="category"
+      label="Choose Category"
+      :items="getCategoryArr"
+    />
+    <v-text-field
+      v-model="customCategory"
+      label="Or create a custom category"
+    />
+    <v-btn color="teal" dark @click="addExpence">{{
+      action === "edit" ? "Save changes" : "Add expence"
+    }}</v-btn>
+  </v-card>
 </template>
 
 <script>
@@ -50,8 +49,8 @@ export default {
     };
   },
   methods: {
-    keyPressHandler(e) {
-      console.log("escape pressed ", e);
+    keyPressHandler() {
+      console.log("escape pressed ");
       this.$router.push({
         path: "/",
       });
@@ -75,7 +74,7 @@ export default {
         this.updEditExpence([this.indx, expence]);
       }
       if (!this.settings) this.updNewExpence(expence);
-      this.message = `Your added ${this.value} to ${expence.category} category`;
+      this.message = `You've added ${this.value} to ${expence.category} category`;
     },
   },
   computed: {
@@ -89,7 +88,7 @@ export default {
     },
   },
   mounted() {
-    focus(this.value);
+    focus("valRef");
     if (this.settings) {
       const obj = this.settings;
       this.category = obj.customCategory || obj.category;
@@ -112,4 +111,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.add-form {
+  max-width: 500px;
+  min-width: 300px;
+}
+</style>

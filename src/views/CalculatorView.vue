@@ -1,5 +1,7 @@
 <template>
   <v-container>
+    <h1 class="text-h5 text-sm-h3 text-left mb-8">{{ msg }}</h1>
+    <hr />
     <CalculatorComp />
   </v-container>
 </template>
@@ -11,13 +13,13 @@ export default {
     CalculatorComp: () => import("../components/CalculatorComp.vue"),
   },
   data() {
-    return {};
+    return {
+      msg: "Calculator",
+    };
   },
   methods: {},
   computed: {},
 };
 </script>
 
-<style scoped>
-</style>
-
+<style scoped></style>
