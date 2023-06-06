@@ -2,7 +2,7 @@
   <v-container :class="name">
     <div>{{ settings.title }}</div>
     <transition fade>
-      <ExpenceAdd v-if="name === 'addExpence'" />
+      <ExpenseAdd v-if="name === 'addExpense'" />
     </transition>
     <button @click="$modal.hide()">&times;</button>
   </v-container>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  components: { ExpenceAdd: () => import("./ExpenceAdd.vue") },
+  components: { ExpenseAdd: () => import("./ExpenseAdd.vue") },
   name: "ModalWindow",
   props: {
     name: String,
@@ -20,14 +20,14 @@ export default {
 </script>
 
 <style scoped>
-.addExpence {
+.addExpense {
   position: absolute;
   top: 30vh;
   left: 20vw;
   background: #f8f8f8;
   padding: 20px;
 }
-.expenceEdit {
+.expenseEdit {
   display: flex;
   position: absolute;
 }

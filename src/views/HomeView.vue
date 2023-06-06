@@ -3,24 +3,24 @@
     <v-row class="sm-col-4 col-12">
       <v-col>
         <div class="text-h5 text-sm-h3 text-left mb-8">
-          My personal expences
+          My personal expenses
         </div>
 
         <v-dialog v-model="dialog">
           <template v-slot:activator="{ on }">
             <v-btn color="teal" dark v-on="on">
-              Add New Expence <v-icon>mdi-plus</v-icon>
+              Add New Expense <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
           <v-card>
-            <ExpenceAdd />
+            <ExpenseAdd />
           </v-card>
         </v-dialog>
 
-        <ExpencesList :expencesArr="getExpencesSlice" />
-        <ExpencesPagination
+        <ExpensesList :expensesArr="getExpensesSlice" />
+        <ExpensesPagination
           @clickHandler="updateFocusPage"
-          :pages="getAllExpences.length"
+          :pages="getAllExpenses.length"
           :focus="getFocusPage"
           :stack="getStackOfPages"
         />
@@ -33,15 +33,15 @@
 <script>
 import { mapMutations } from "vuex";
 import { mapGetters } from "vuex";
-import ExpencesList from "../components/ExpencesList.vue";
-import ExpencesPagination from "../components/ExpencesPagination.vue";
+import ExpensesList from "../components/ExpensesList.vue";
+import ExpensesPagination from "../components/ExpensesPagination.vue";
 
 export default {
   name: "HomeView",
   components: {
-    ExpencesList,
-    ExpencesPagination,
-    ExpenceAdd: () => import("@/components/ExpenceAdd.vue"),
+    ExpensesList,
+    ExpensesPagination,
+    ExpenseAdd: () => import("@/components/ExpenseAdd.vue"),
   },
   data() {
     return {
@@ -50,16 +50,16 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "updateExpences",
+      "updateExpenses",
       "updateFocusPage",
       "updateStackOfPages",
-      "addNewExpence",
+      "addNewExpense",
     ]),
   },
   computed: {
     ...mapGetters([
-      "getAllExpences",
-      "getExpencesSlice",
+      "getAllExpenses",
+      "getExpensesSlice",
       "getStackOfPages",
       "getFocusPage",
       "getCategoryArr",

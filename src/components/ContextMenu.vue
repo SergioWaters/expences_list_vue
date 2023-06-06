@@ -8,7 +8,7 @@
         Edit
       </v-btn>
       <v-card class="justify-self-center" v-show="isEdit">
-        <ExpenceAdd :settings="obj" action="edit" :indx="indx" />
+        <ExpenseAdd :settings="obj" action="edit" :indx="indx" />
       </v-card>
       <button class="closer" @click="onContextHide">&times;</button>
     </v-card>
@@ -19,9 +19,9 @@
 import { mapMutations } from "vuex";
 
 export default {
-  name: "ExpenceEdit",
+  name: "ExpenseEdit",
   components: {
-    ExpenceAdd: () => import("@/components/ExpenceAdd.vue"),
+    ExpenseAdd: () => import("@/components/ExpenseAdd.vue"),
   },
   data() {
     return {
@@ -34,10 +34,10 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["updEditExpence"]),
+    ...mapMutations(["updEditExpense"]),
 
     deleteItem() {
-      this.updEditExpence([this.indx]);
+      this.updEditExpense([this.indx]);
       this.onContextHide();
     },
 

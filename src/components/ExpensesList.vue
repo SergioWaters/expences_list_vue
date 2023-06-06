@@ -1,30 +1,30 @@
 <template>
-  <v-container class="expences">
+  <v-container class="expenses">
     <v-row>
       <v-col class="text-h5" :cols="1">#</v-col>
       <v-col class="text-h5" :cols="4">Date</v-col>
       <v-col class="text-h5" :cols="4">Category </v-col>
       <v-col class="text-h5" :cols="3">Value </v-col>
     </v-row>
-    <v-row v-for="expence in expencesArr" :key="expence.id">
-      <v-col :cols="1">{{ getIndex(expence) + 1 }}</v-col>
-      <v-col :cols="4">{{ expence.date }}</v-col>
-      <v-col :cols="4">{{ expence.category }}</v-col>
-      <v-col :cols="2">{{ expence.value }}</v-col>
-      <v-col :cols="1" @click="onCont(e, expence)">
+    <v-row v-for="expense in expensesArr" :key="expense.id">
+      <v-col :cols="1">{{ getIndex(expense) + 1 }}</v-col>
+      <v-col :cols="4">{{ expense.date }}</v-col>
+      <v-col :cols="4">{{ expense.category }}</v-col>
+      <v-col :cols="2">{{ expense.value }}</v-col>
+      <v-col :cols="1" @click="onCont(e, expense)">
         <v-icon>mdi-dots-vertical</v-icon>
       </v-col>
     </v-row>
-    <ExpenceEdit />
+    <ExpenseEdit />
   </v-container>
 </template>
 <script>
 import { mapGetters } from "vuex";
 
 export default {
-  name: "ExpencesList",
+  name: "ExpensesList",
   components: {
-    ExpenceEdit: () => import("./ContextMenu.vue"),
+    ExpenseEdit: () => import("./ContextMenu.vue"),
   },
   data() {
     return {
@@ -33,11 +33,11 @@ export default {
     };
   },
   props: {
-    expencesArr: Array,
+    expensesArr: Array,
   },
   methods: {
-    onContext(e, expence) {
-      const props = [this.getIndex(expence), expence, e.currentTarget];
+    onContext(e, expense) {
+      const props = [this.getIndex(expense), expense, e.currentTarget];
       console.log(props);
       // this.$context.show(props);
     },
@@ -45,18 +45,18 @@ export default {
       return new Intl.DateTimeFormat("ru-RU").format(new Date(date));
     },
 
-    getIndex(expence) {
-      return this.getAllExpences.indexOf(expence);
+    getIndex(expense) {
+      return this.getAllExpenses.indexOf(expense);
     },
   },
   computed: {
-    ...mapGetters(["getAllExpences"]),
+    ...mapGetters(["getAllExpenses"]),
   },
 };
 </script>
 
 <style scoped>
-.expences {
+.expenses {
   min-height: 300px;
 }
 </style>

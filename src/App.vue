@@ -4,8 +4,8 @@
       <v-container>
         <!-- <v-btn plain :ripple="false" to="/">Home</v-btn> -->
         <v-btn plain :ripple="false" to="/">VuetifyBoard</v-btn>
-        <v-btn plain :ripple="false" to="/AddExpence">Add</v-btn>
-        <v-btn plain :ripple="false" to="/common">Common Expences</v-btn>
+        <v-btn plain :ripple="false" to="/AddExpense">Add</v-btn>
+        <v-btn plain :ripple="false" to="/common">Common Expenses</v-btn>
         <v-btn plain :ripple="false" to="/about">About</v-btn>
         <v-btn plain :ripple="false" to="/Calculator">Calculator</v-btn>
       </v-container>

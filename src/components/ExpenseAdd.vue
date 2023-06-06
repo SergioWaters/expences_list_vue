@@ -21,8 +21,8 @@
       v-model="customCategory"
       label="Or create a custom category"
     />
-    <v-btn color="teal" dark @click="addExpence">{{
-      action === "edit" ? "Save changes" : "Add expence"
+    <v-btn color="teal" dark @click="addExpense">{{
+      action === "edit" ? "Save changes" : "Add expense"
     }}</v-btn>
   </v-card>
 </template>
@@ -32,7 +32,7 @@ import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
 
 export default {
-  name: "ExpenceAdd",
+  name: "ExpenseAdd",
   props: {
     action: { type: String },
     settings: { type: Object },
@@ -55,15 +55,15 @@ export default {
         path: "/",
       });
     },
-    ...mapMutations(["updNewExpence", "updEditExpence"]),
-    addExpence() {
+    ...mapMutations(["updNewExpense", "updEditExpense"]),
+    addExpense() {
       this.message = "";
       this.category = this.customCategory || this.category;
       if (!this.category)
         return (this.message = "Choose category, or create one");
-      if (!this.value) return (this.message = "Put expence's value");
+      if (!this.value) return (this.message = "Put expense's value");
 
-      const expence = {
+      const expense = {
         id: this.id,
         category: this.customCategory || this.category,
         date: this.date || this.getCurrentDate,
@@ -71,10 +71,10 @@ export default {
       };
 
       if (this.action === "edit") {
-        this.updEditExpence([this.indx, expence]);
+        this.updEditExpense([this.indx, expense]);
       }
-      if (!this.settings) this.updNewExpence(expence);
-      this.message = `You've added ${this.value} to ${expence.category} category`;
+      if (!this.settings) this.updNewExpense(expense);
+      this.message = `You've added ${this.value} to ${expense.category} category`;
     },
   },
   computed: {
@@ -101,7 +101,7 @@ export default {
       if (this.$route.query.value !== "null") {
         this.customCategory = this.$route.params.category;
         this.value = this.$route.query.value;
-        this.addExpence();
+        this.addExpense();
       }
       this.$router.push({
         path: "/",

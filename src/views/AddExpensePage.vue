@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <div class="text-h5 text-sm-h3 text-left mb-8">Add your expence</div>
+    <div class="text-h5 text-sm-h3 text-left mb-8">Add your expense</div>
     <hr />
     <v-container class="d-flex justify-center align-center">
-      <ExpenceAdd />
+      <ExpenseAdd />
     </v-container>
   </v-container>
 </template>
@@ -12,7 +12,7 @@
 export default {
   name: "CalculatorView",
   components: {
-    ExpenceAdd: () => import("../components/ExpenceAdd.vue"),
+    ExpenseAdd: () => import("../components/ExpenseAdd.vue"),
   },
 };
 </script>

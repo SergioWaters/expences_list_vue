@@ -26,8 +26,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "getAllExpences",
-      "getExpencesSlice",
+      "getAllExpenses",
+      "getExpensesSlice",
       "getStackOfPages",
       "getFocusPage",
       "getCategoryArr",

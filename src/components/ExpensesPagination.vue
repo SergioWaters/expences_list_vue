@@ -18,7 +18,7 @@
 <script>
 import { mapMutations } from "vuex";
 export default {
-  name: "ExpencesPagination",
+  name: "ExpensesPagination",
   props: {
     pages: Number,
     focus: Number,

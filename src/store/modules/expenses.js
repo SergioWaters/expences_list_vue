@@ -1,18 +1,18 @@
 export default {
   state: {
-    expencesArr: [],
+    expensesArr: [],
     stackOfPages: 10,
     focusPage: 1,
   },
   getters: {
-    getExpencesSlice(state) {
-      return state.expencesArr.slice(
+    getExpensesSlice(state) {
+      return state.expensesArr.slice(
         state.stackOfPages * (state.focusPage - 1),
         state.stackOfPages * (state.focusPage - 1) + state.stackOfPages
       );
     },
-    getAllExpences(state) {
-      return state.expencesArr;
+    getAllExpenses(state) {
+      return state.expensesArr;
     },
     getStackOfPages(state) {
       return state.stackOfPages;
@@ -22,14 +22,14 @@ export default {
     },
     getCategoryArr(state) {
       let categoryArr = [
-        ...new Set(state.expencesArr.map((item) => item.category)),
+        ...new Set(state.expensesArr.map((item) => item.category)),
       ];
 
       return categoryArr;
     },
     getAllCategories(state) {
       const resultArr = [];
-      state.expencesArr.forEach((item) => {
+      state.expensesArr.forEach((item) => {
         let newItem = { category: item.category, count: 1, value: item.value };
         const find = resultArr.findIndex(
           (item) => item.category === newItem.category
@@ -44,11 +44,11 @@ export default {
       return resultArr;
     },
     getTotal(state) {
-      return state.expencesArr.reduce((res, cur) => res + Number(cur.value), 0);
+      return state.expensesArr.reduce((res, cur) => res + Number(cur.value), 0);
     },
   },
   mutations: {
-    updateExpences(state, arr) {
+    updateExpenses(state, arr) {
       arr.forEach((element) => {
         element.category =
           element.category.charAt(0).toUpperCase() + element.category.slice(1);
@@ -60,7 +60,7 @@ export default {
           new Date(element.date)
         );
       });
-      state.expencesArr = arr;
+      state.expensesArr = arr;
     },
     updateFocusPage(state, focusPage) {
       state.focusPage = focusPage;
@@ -68,22 +68,22 @@ export default {
     updateStackOfPages(state, stackOfPages) {
       state.stackOfPages = stackOfPages;
     },
-    updNewExpence(state, expence) {
-      expence.category =
-        expence.category.charAt(0).toUpperCase() + expence.category.slice(1);
-      if (!expence.id)
-        expence.id = Math.floor(
+    updNewExpense(state, expense) {
+      expense.category =
+        expense.category.charAt(0).toUpperCase() + expense.category.slice(1);
+      if (!expense.id)
+        expense.id = Math.floor(
           Math.random() * Math.floor(Math.random() * Date.now())
         );
-      expence.date = new Intl.DateTimeFormat("ru-RU").format(
-        new Date(expence.date)
+      expense.date = new Intl.DateTimeFormat("ru-RU").format(
+        new Date(expense.date)
       );
-      state.expencesArr.unshift(expence);
+      state.expensesArr.unshift(expense);
     },
-    updEditExpence(state, [indx, item]) {
+    updEditExpense(state, [indx, item]) {
       item
-        ? state.expencesArr.splice(+indx, 1, item)
-        : state.expencesArr.splice(+indx, 1);
+        ? state.expensesArr.splice(+indx, 1, item)
+        : state.expensesArr.splice(+indx, 1);
     },
   },
   actions: {
@@ -100,7 +100,7 @@ export default {
           value: 360,
         },
       ];
-      ctx.commit("updateExpences", arr);
+      ctx.commit("updateExpenses", arr);
     },
   },
 };

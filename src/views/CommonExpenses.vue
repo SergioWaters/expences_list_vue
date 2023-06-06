@@ -1,15 +1,15 @@
 <template>
-  <v-container class="common_expences">
+  <v-container class="common_expenses">
     <h3 class="text-h5 text-sm-h3 text-left mb-8">Popular Categories</h3>
     <hr />
     <v-card
-      class="d-flex justify-center flex-column align-start pa-3 ma-10 common-expences"
+      class="d-flex justify-center flex-column align-start pa-3 ma-10 common-expenses"
     >
       <v-text-field
         hide-details="true"
         v-model="amount"
         type="number"
-        label="Put your expence"
+        label="Put your expense"
         solo
       />
       <v-btn
@@ -37,7 +37,7 @@ export default {
   methods: {
     addExpense(item) {
       if (!this.amount) return;
-      this.$router.push(`/addExpence/${item}?value=${this.amount}&push=true`);
+      this.$router.push(`/addExpense/${item}?value=${this.amount}&push=true`);
     },
   },
   computed: {
@@ -46,7 +46,7 @@ export default {
 };
 </script>
 <style scoped>
-.common-expences {
+.common-expenses {
   max-width: 600px;
   min-width: 300px;
 }

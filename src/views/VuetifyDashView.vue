@@ -3,18 +3,19 @@
     <!-- eslint-disable  -->
     <v-row class="sm-col-4 col-12">
       <v-col>
-        <div class="text-h5 text-sm-h3 text-left mb-8">
-          My personal expences
-        </div>
+        <h5 class="text-h5 text-sm-h3 text-left mb-8">
+          My personal expenses
+        </h5>
 
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
             <v-btn color="teal" dark v-on="on" class="mb-4">
-              Add New Expence <v-icon>mdi-plus</v-icon>
+              Add New Expense
+              <v-icon>mdi-plus</v-icon>
             </v-btn>
           </template>
           <v-card>
-            <ExpenceAdd />
+            <ExpenseAdd/>
           </v-card>
         </v-dialog>
 
@@ -47,16 +48,16 @@
         </v-card>
       </v-col>
       <v-col>
-        <div class="text-h6 text-center mb-8">Expences by Category</div>
+        <div class="text-h6 text-center mb-8">Expenses by Category</div>
 
-        <DiagrammChart
+        <DiagramChart
           :chartData="chartDataMut"
           :options="chartOptions"
-          label="Expences"
+          label="Expenses"
         />
       </v-col>
     </v-row>
-    <ExpenceEdit />
+    <ExpenseEdit />
   </v-container>
 </template>
 
@@ -67,9 +68,9 @@ import { mapMutations, mapGetters } from "vuex";
 export default {
   name: "HomeView",
   components: {
-    DiagrammChart: () => import("@/components/DiagrammChart.vue"),
-    ExpenceEdit: () => import("@/components/ContextMenu.vue"),
-    ExpenceAdd: () => import("@/components/ExpenceAdd.vue"),
+    DiagramChart: () => import("@/components/DiagrammChart.vue"),
+    ExpenseEdit: () => import("@/components/ContextMenu.vue"),
+    ExpenseAdd: () => import("@/components/ExpenseAdd.vue"),
   },
   data() {
     return {
@@ -89,16 +90,16 @@ export default {
   },
   methods: {
     ...mapMutations([
-      "updateExpences",
+      "updateExpenses",
       "updateFocusPage",
       "updateStackOfPages",
-      "addNewExpence",
+      "addNewExpense",
     ]),
   },
   computed: {
     ...mapGetters([
-      "getAllExpences",
-      "getExpencesSlice",
+      "getAllExpenses",
+      "getExpensesSlice",
       "getStackOfPages",
       "getFocusPage",
       "getCategoryArr",
@@ -130,12 +131,12 @@ export default {
       };
     },
     numberOfButtons() {
-      return Math.ceil(this.getAllExpences.length / this.getStackOfPages);
+      return Math.ceil(this.getAllExpenses.length / this.getStackOfPages);
     },
     addNumber() {
-      const items = this.getAllExpences;
-      items.forEach((expence, indx) => {
-        expence.number = +indx + 1;
+      const items = this.getAllExpenses;
+      items.forEach((expense, indx) => {
+        expense.number = +indx + 1;
       });
       return items;
     },

@@ -25,24 +25,19 @@ const routes = [
     component: () => import("../components/DiagrammChart.vue"),
   },
   {
-    path: "/default",
-    name: "default",
-    component: () => import("../components/FckngTable.vue"),
-  },
-  {
     path: "/common",
     name: "commonView",
-    component: () => import("../views/CommonExpences.vue"),
+    component: () => import("../views/CommonExpenses.vue"),
   },
   {
-    path: "/addExpence",
-    name: "addExpencePage",
-    component: () => import("../views/AddExpencePage.vue"),
+    path: "/addExpense",
+    name: "addExpensePage",
+    component: () => import("../views/AddExpensePage.vue"),
   },
   {
-    path: "/addExpence/:category",
-    name: "addExpence",
-    component: () => import("../components/ExpenceAdd.vue"),
+    path: "/addExpense/:category",
+    name: "addExpense",
+    component: () => import("../components/ExpenseAdd.vue"),
   },
   {
     path: "/about",
